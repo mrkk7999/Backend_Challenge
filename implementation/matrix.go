@@ -6,17 +6,17 @@ import (
 	"strings"
 )
 
-// Echo
-// returns the original matrix as a string
 func (s *service) Echo(matrix [][]int) (string, error) {
 	if len(matrix) == 0 {
 		return "", errors.New("matrix is empty")
 	}
 
+	cols := len(matrix[0])
 	var result []string
+
 	for _, row := range matrix {
-		if len(row) == 0 {
-			return "", errors.New("matrix contains an empty row")
+		if len(row) != cols {
+			return "", errors.New("matrix is not rectangular")
 		}
 
 		rowStr := make([]string, len(row))
@@ -25,6 +25,7 @@ func (s *service) Echo(matrix [][]int) (string, error) {
 		}
 		result = append(result, strings.Join(rowStr, ","))
 	}
+
 	return strings.Join(result, "\n"), nil
 }
 
